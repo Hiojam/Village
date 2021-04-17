@@ -1,0 +1,52 @@
+# ITEMS LIST
+Items:
+  IceCream:
+    Chocolate:
+      name: "&d&lChocolate"
+      head: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODNhNzFiNTc3MjY2NGQ2MjIyNTU3N2MxMjg5MmU1MzI0ZTA3ZTQxNzgyOTgyMzk0NThhYTQ2ZDY3NGMxMzM3In19fQ=="
+    Vainilla:
+      name: "&d&lVainilla"
+      head: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmJiYmIyM2Q1ZjVlMzQ0ZmViZmUxYmFkMGYzMWUwMWZiMWVjN2JmMDkzNzAxMTkwMWE2OTk2NTFkNjYifX19"
+    Strawberry:
+      name: "&d&lStrawberry"
+      head: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTY0MDYzNDk5OGYyM2E0NzRhODFiYmVhZDFhNzA4MjZlM2ZjNzc4M2QyYWRhMWRmNGFhODFmZmViMzdhMyJ9fX0="
+  Restaurant:
+    Hamburguer:
+      name: "&d&lBurger"
+      head: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWI4OWYwNzFjOThhNWZlYTM1OGQwOGE1ODZmY2E0YmM3MzliMGQ5ZGJhMGE1NmQxMDczYmM2ZDgzODcyZDI2YSJ9fX0="
+    Fries:
+      name: "&d&lFries"
+      head: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODA2ZGIzNzVlODFjMDYzNzQ3Zjk3MThlNzI1YjA1Y2IzN2IxNmY4YWVjNWM3ZjIxZmQ1MzdkZTYyNTQwZWNjOSJ9fX0="
+    Pizza:
+      name: "&d&lPizza"
+      head: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjFhNjg5ZTdiZmNmMDQwNTc1Y2JhNjhjYzM2MTQ5MjAzYmZkNzEzYzNiODEwODg3MzkyMjBlYTViN2I3ZjliOSJ9fX0="
+    Donut:
+      name: "&d&lDonut"
+      head: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2FiMDQ4NDdmMDliM2YyZTExZmM0MTJjMmUyNDFhY2NmOTk2NzU0MzI5MzNiNDcxNjgxMDA1YzQyZTVkMjI4NSJ9fX0="
+    Muffin:
+      name: "&d&lMuffin"
+      head: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDI4NGU3N2I4OTMwYjBmMjlhYTY2Mjc5YzQxZDVlMTQ5YmVlMjYzZjIxZmUzNzI2MzZjYmY3NjhkYjljZWU0YSJ9fX0="
+    Drink:
+      name: "&d&lDrink"
+      head: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTk1MzkzYmJmMzlkZjIzZWY0NTE1NWY1MTI4ZjJjZGU4MTE0MDBhNzc1ZDMzY2FiMDU5MGZlZWE5OTMyMzczNSJ9fX0="
+
+# PLACES IN VILLAGE WITH OWNER
+Places:
+  IceCream_Shop:
+    owner: RoxxionYT
+    total-earnings: 0.0
+  Restaurant_Shop:
+    owner: RoxxionYT
+    total-earnings: 0.0
+  Bank:
+    owner: RoxxionYT
+    total-earnings: 0.0
+
+# NPC INTERACTIONS
+NPC:
+  Padre-Martin:
+    - ' &7[&ePadre Martin III&7] &aMuerte a un builder!'
+    - ' &7[&ePadre Martin III&7] &aDe dia es algo normal, de noche suceden cosas misteriosas...!'
+    - ' &7[&ePadre Martin III&7] &aCHINGA TU HERMANA'
+    - ' &7[&ePadre Martin III&7] &aCHINGA TU PRIMA'
+    - 'NO CAMBIAR ESTE TEXTO #1'

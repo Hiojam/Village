@@ -1,0 +1,19 @@
+name: Village
+version: ${project.version}
+main: village.Village
+prefix: Village
+load: POSTWORLD
+depend:
+  - Lydark_Core
+  - Lydark_API
+authors: [ RoxxionYT ]
+description: Village Core
+website: https://lydark.net
+
+commands:
+  shop:
+    description: Shops.
+  vilcoins:
+    description: VilCoins.
+  npctalk:
+    description: NpcTalk
