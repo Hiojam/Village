@@ -47,6 +47,7 @@ public class Runner {
                 OfflinePlayer owner = Bukkit.getOfflinePlayer(config.getString("Places." + place + ".owner"));
                 if (owner.isOnline()) {
                     owner.getPlayer().sendMessage(lydark.Chat.wallet + " §fHas ganado §a" + ochentaporciento + " §3§lVil§e§lCoins §fde tu negocio §3" + place + "§f.");
+                    owner.getPlayer().sendMessage(lydark.Chat.wallet+ " §fHas pagado la comision de tu negocio §3"+place+"§f y se te han removido §a"+veinteporciento+" §3§lVil§e§lCoins.");
                 }
 
                 plugin.addVilCoins(owner, ochentaporciento);

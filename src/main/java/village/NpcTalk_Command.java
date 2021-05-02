@@ -43,6 +43,7 @@ public class NpcTalk_Command implements CommandExecutor {
                         String mensaje = mensajes.get(numero);
 
                         if(mensaje.equals("NO CAMBIAR ESTE TEXTO #1")){
+                            assert plugin.getServer().getWorld("Estructuras") != null;
                             if(plugin.getServer().getWorld("Estructuras").getTime() > 12500 && plugin.getServer().getWorld("Estructuras").getTime()< 23100){
                                 jugador.sendMessage(" §7[§ePadre Martin III§7] §aViva Satanas!");
                                 jugador.playSound(jugador.getLocation(), Sound.ENDERDRAGON_DEATH, 1, 1);
