@@ -4,7 +4,7 @@ import Listeners.Exchange_Listener;
 import Listeners.IceCream_Listener;
 import Listeners.PlayerJoin;
 import Listeners.Restaurant_Listener;
-import lydark.api.api.Lydark_API;
+import lydark.api.Lydark_API;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -81,7 +81,7 @@ public final class Village extends JavaPlugin {
     public double getVilCoins(OfflinePlayer jugador){
 
         double dinero;
-        Document data = lydark.MongoDB.findPlayer(jugador);
+        Document data = lydark.mongo.findPlayer(jugador);
 
         if(data != null && data.containsKey("vilcoins")) {
             dinero = data.getDouble("vilcoins");
@@ -95,19 +95,19 @@ public final class Village extends JavaPlugin {
 
     public void addVilCoins(OfflinePlayer jugador, double amount) {
 
-        Document data = lydark.MongoDB.findPlayer(jugador);
+        Document data = lydark.mongo.findPlayer(jugador);
 
         if(data != null && data.containsKey("vilcoins")) {
-            lydark.MongoDB.updateDouble(jugador, "vilcoins", data.getDouble("vilcoins")+amount);
+            lydark.mongo.updateDouble(jugador, "vilcoins", data.getDouble("vilcoins")+amount);
         }else {
-            lydark.MongoDB.updateDouble(jugador, "vilcoins", amount);
+            lydark.mongo.updateDouble(jugador, "vilcoins", amount);
         }
 
     }
 
     public void removeVilCoins(OfflinePlayer jugador, double amount) {
 
-        Document data = lydark.MongoDB.findPlayer(jugador);
+        Document data = lydark.mongo.findPlayer(jugador);
 
         if(data != null && data.containsKey("vilcoins")) {
 
@@ -116,11 +116,11 @@ public final class Village extends JavaPlugin {
             if(a <= amount) {
 
                 if(!(a == 0)) {
-                    lydark.MongoDB.updateDouble(jugador, "vilcoins", 0);
+                    lydark.mongo.updateDouble(jugador, "vilcoins", 0);
                 }
 
             }else {
-                lydark.MongoDB.updateDouble(jugador, "vilcoins", a-amount);
+                lydark.mongo.updateDouble(jugador, "vilcoins", a-amount);
             }
         }
     }
@@ -132,13 +132,13 @@ public final class Village extends JavaPlugin {
 
             removeVilCoins(jugador, price);
             if(jugador.isOnline()){
-                jugador.getPlayer().sendMessage(lydark.Chat.wallet+" §fSe han removido §a"+price+" §3§lVil§e§lCoins§f de tu cuenta.");
+                jugador.getPlayer().sendMessage(lydark.chat.wallet+" §fSe han removido §a"+price+" §3§lVil§e§lCoins§f de tu cuenta.");
             }
             return true;
 
         }else{
             if(jugador.isOnline()){
-                jugador.getPlayer().sendMessage(lydark.Chat.wallet+" §cNo tienes dinero suficiente.");
+                jugador.getPlayer().sendMessage(lydark.chat.wallet+" §cNo tienes dinero suficiente.");
             }
             return false;
         }

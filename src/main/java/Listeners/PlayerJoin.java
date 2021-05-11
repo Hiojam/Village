@@ -1,6 +1,6 @@
 package Listeners;
 
-import lydark.api.api.Lydark_API;
+import lydark.api.Lydark_API;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -15,10 +15,10 @@ public class PlayerJoin implements Listener {
     @EventHandler
     public void playerJoin(PlayerJoinEvent event){
         Player jugador = event.getPlayer();
-        Document data = lydark.MongoDB.findPlayer(jugador);
+        Document data = lydark.mongo.findPlayer(jugador);
 
         if(data != null && !data.containsKey("vilcoins")){
-            lydark.MongoDB.updateDouble(jugador, "vilcoins", 0);
+            lydark.mongo.updateDouble(jugador, "vilcoins", 0);
         }
     }
 

@@ -1,6 +1,6 @@
 package Listeners;
 
-import lydark.api.api.Lydark_API;
+import lydark.api.Lydark_API;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -33,7 +33,7 @@ public class Exchange_Listener implements Listener {
             if(event.getCurrentItem().getType() == Material.AIR) { return; }
             Player jugador = (Player) event.getWhoClicked();
 
-            Document data = lydark.MongoDB.findPlayer(jugador);
+            Document data = lydark.mongo.findPlayer(jugador);
 
             event.setCancelled(true);
 
@@ -42,31 +42,31 @@ public class Exchange_Listener implements Listener {
                 double price = 50;
 
                 if(data != null && data.getString("coins").equals("lycoins")){
-                    if(lydark.Economy.compraLyCoins(jugador, price)){
+                    if(lydark.economy.compraLyCoins(jugador, price)){
                         plugin.addVilCoins(jugador, 1000);
-                        jugador.sendMessage(lydark.Chat.wallet + " §fSe te han añadido §a1000 §3§lVil§e§lCoins§f a tu cuenta.");
+                        jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a1000 §3§lVil§e§lCoins§f a tu cuenta.");
                         Shop.payOwner("Bank", 500);
                     }
                 }
                 else if(data != null && data.getString("coins").equals("darkcoins")){
-                    if(lydark.Economy.compraDarkCoins(jugador, price)){
+                    if(lydark.economy.compraDarkCoins(jugador, price)){
                         plugin.addVilCoins(jugador, 1000);
-                        jugador.sendMessage(lydark.Chat.wallet + " §fSe te han añadido §a1000 §3§lVil§e§lCoins§f a tu cuenta.");
+                        jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a1000 §3§lVil§e§lCoins§f a tu cuenta.");
                         Shop.payOwner("Bank", 500);
                     }
                 }
                 else{
 
                     if(event.isLeftClick()){
-                        if(lydark.Economy.compraLyCoins(jugador, price)){
+                        if(lydark.economy.compraLyCoins(jugador, price)){
                             plugin.addVilCoins(jugador, 1000);
-                            jugador.sendMessage(lydark.Chat.wallet + " §fSe te han añadido §a1000 §3§lVil§e§lCoins§f a tu cuenta.");
+                            jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a1000 §3§lVil§e§lCoins§f a tu cuenta.");
                             Shop.payOwner("Bank", 500);
                         }
                     }else{
-                        if(lydark.Economy.compraDarkCoins(jugador, price)){
+                        if(lydark.economy.compraDarkCoins(jugador, price)){
                             plugin.addVilCoins(jugador, 1000);
-                            jugador.sendMessage(lydark.Chat.wallet + " §fSe te han añadido §a1000 §3§lVil§e§lCoins§f a tu cuenta.");
+                            jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a1000 §3§lVil§e§lCoins§f a tu cuenta.");
                             Shop.payOwner("Bank", 500);
                         }
                     }
@@ -80,31 +80,31 @@ public class Exchange_Listener implements Listener {
                 double price = 250;
 
                 if(data != null && data.getString("coins").equals("lycoins")){
-                    if(lydark.Economy.compraLyCoins(jugador, price)){
+                    if(lydark.economy.compraLyCoins(jugador, price)){
                         plugin.addVilCoins(jugador, 5000);
-                        jugador.sendMessage(lydark.Chat.wallet + " §fSe te han añadido §a5000 §3§lVil§e§lCoins§f a tu cuenta.");
+                        jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a5000 §3§lVil§e§lCoins§f a tu cuenta.");
                         Shop.payOwner("Bank", 2500);
                     }
                 }
                 else if(data != null && data.getString("coins").equals("darkcoins")){
-                    if(lydark.Economy.compraDarkCoins(jugador, price)){
+                    if(lydark.economy.compraDarkCoins(jugador, price)){
                         plugin.addVilCoins(jugador, 5000);
-                        jugador.sendMessage(lydark.Chat.wallet + " §fSe te han añadido §a5000 §3§lVil§e§lCoins§f a tu cuenta.");
+                        jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a5000 §3§lVil§e§lCoins§f a tu cuenta.");
                         Shop.payOwner("Bank", 2500);
                     }
                 }
                 else{
 
                     if(event.isLeftClick()){
-                        if(lydark.Economy.compraLyCoins(jugador, price)){
+                        if(lydark.economy.compraLyCoins(jugador, price)){
                             plugin.addVilCoins(jugador, 5000);
-                            jugador.sendMessage(lydark.Chat.wallet + " §fSe te han añadido §a5000 §3§lVil§e§lCoins§f a tu cuenta.");
+                            jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a5000 §3§lVil§e§lCoins§f a tu cuenta.");
                             Shop.payOwner("Bank", 2500);
                         }
                     }else{
-                        if(lydark.Economy.compraDarkCoins(jugador, price)){
+                        if(lydark.economy.compraDarkCoins(jugador, price)){
                             plugin.addVilCoins(jugador, 5000);
-                            jugador.sendMessage(lydark.Chat.wallet + " §fSe te han añadido §a5000 §3§lVil§e§lCoins§f a tu cuenta.");
+                            jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a5000 §3§lVil§e§lCoins§f a tu cuenta.");
                             Shop.payOwner("Bank", 2500);
                         }
                     }
@@ -119,31 +119,31 @@ public class Exchange_Listener implements Listener {
                 double price = 1250;
 
                 if(data != null && data.getString("coins").equals("lycoins")){
-                    if(lydark.Economy.compraLyCoins(jugador, price)){
+                    if(lydark.economy.compraLyCoins(jugador, price)){
                         plugin.addVilCoins(jugador, 25000);
-                        jugador.sendMessage(lydark.Chat.wallet + " §fSe te han añadido §a25000 §3§lVil§e§lCoins§f a tu cuenta.");
+                        jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a25000 §3§lVil§e§lCoins§f a tu cuenta.");
                         Shop.payOwner("Bank", 12500);
                     }
                 }
                 else if(data != null && data.getString("coins").equals("darkcoins")){
-                    if(lydark.Economy.compraDarkCoins(jugador, price)){
+                    if(lydark.economy.compraDarkCoins(jugador, price)){
                         plugin.addVilCoins(jugador, 25000);
-                        jugador.sendMessage(lydark.Chat.wallet + " §fSe te han añadido §a25000 §3§lVil§e§lCoins§f a tu cuenta.");
+                        jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a25000 §3§lVil§e§lCoins§f a tu cuenta.");
                         Shop.payOwner("Bank", 12500);
                     }
                 }
                 else{
 
                     if(event.isLeftClick()){
-                        if(lydark.Economy.compraLyCoins(jugador, price)){
+                        if(lydark.economy.compraLyCoins(jugador, price)){
                             plugin.addVilCoins(jugador, 25000);
-                            jugador.sendMessage(lydark.Chat.wallet + " §fSe te han añadido §a25000 §3§lVil§e§lCoins§f a tu cuenta.");
+                            jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a25000 §3§lVil§e§lCoins§f a tu cuenta.");
                             Shop.payOwner("Bank", 12500);
                         }
                     }else{
-                        if(lydark.Economy.compraDarkCoins(jugador, price)){
+                        if(lydark.economy.compraDarkCoins(jugador, price)){
                             plugin.addVilCoins(jugador, 25000);
-                            jugador.sendMessage(lydark.Chat.wallet + " §fSe te han añadido §a25000 §3§lVil§e§lCoins§f a tu cuenta.");
+                            jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a25000 §3§lVil§e§lCoins§f a tu cuenta.");
                             Shop.payOwner("Bank", 12500);
                         }
                     }

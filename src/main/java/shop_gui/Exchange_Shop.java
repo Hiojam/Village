@@ -2,7 +2,7 @@ package shop_gui;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import lydark.api.api.Lydark_API;
+import lydark.api.Lydark_API;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -37,7 +37,7 @@ public class Exchange_Shop implements InventoryHolder {
 
     public void createInventory(Player jugador) {
 
-        Document data = lydark.MongoDB.findPlayer(jugador);
+        Document data = lydark.mongo.findPlayer(jugador);
         //20 VILCOINS = 1 LYCOIN/DARKCOIN
 
         //1000 VilCoins

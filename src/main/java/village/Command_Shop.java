@@ -1,6 +1,6 @@
 package village;
 
-import lydark.api.api.Lydark_API;
+import lydark.api.Lydark_API;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -23,7 +23,7 @@ public class Command_Shop implements CommandExecutor {
 
     public boolean onCommand(CommandSender sender, Command comando, String label, String[] args) {
         if(!(sender instanceof Player)) {
-            Bukkit.getConsoleSender().sendMessage(lydark.Chat.prefix+" §cNo puedes ejecutar comandos desde la consola");
+            Bukkit.getConsoleSender().sendMessage(lydark.chat.prefix+" §cNo puedes ejecutar comandos desde la consola");
             return false;
         }else {
             Player jugador = (Player) sender;
@@ -77,17 +77,17 @@ public class Command_Shop implements CommandExecutor {
                     }
 
                     else{
-                        jugador.sendMessage(lydark.Chat.nopermission);
+                        jugador.sendMessage(lydark.chat.nopermission);
                         return false;
                     }
 
                 }else{
-                    jugador.sendMessage(lydark.Chat.nopermission);
+                    jugador.sendMessage(lydark.chat.nopermission);
                     return false;
                 }
 
             }else{
-                jugador.sendMessage(lydark.Chat.nopermission);
+                jugador.sendMessage(lydark.chat.nopermission);
                 return false;
             }
         }

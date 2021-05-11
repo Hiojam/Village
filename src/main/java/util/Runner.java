@@ -1,6 +1,6 @@
 package util;
 
-import lydark.api.api.Lydark_API;
+import lydark.api.Lydark_API;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
@@ -46,8 +46,8 @@ public class Runner {
 
                 OfflinePlayer owner = Bukkit.getOfflinePlayer(config.getString("Places." + place + ".owner"));
                 if (owner.isOnline()) {
-                    owner.getPlayer().sendMessage(lydark.Chat.wallet + " §fHas ganado §a" + ochentaporciento + " §3§lVil§e§lCoins §fde tu negocio §3" + place + "§f.");
-                    owner.getPlayer().sendMessage(lydark.Chat.wallet+ " §fHas pagado la comision de tu negocio §3"+place+"§f y se te han removido §a"+veinteporciento+" §3§lVil§e§lCoins.");
+                    owner.getPlayer().sendMessage(lydark.chat.wallet + " §fHas ganado §a" + ochentaporciento + " §3§lVil§e§lCoins §fde tu negocio §3" + place + "§f.");
+                    owner.getPlayer().sendMessage(lydark.chat.wallet+ " §fHas pagado la comision de tu negocio §3"+place+"§f y se te han removido §a"+veinteporciento+" §3§lVil§e§lCoins.");
                 }
 
                 plugin.addVilCoins(owner, ochentaporciento);
@@ -57,7 +57,7 @@ public class Runner {
         }
 
         if(alcalde.isOnline() && total != 0){
-            alcalde.getPlayer().sendMessage(lydark.Chat.wallet + " §fHas ganado §a" + total + " §3§lVil§e§lCoins §fpor ser alcalde.");
+            alcalde.getPlayer().sendMessage(lydark.chat.wallet + " §fHas ganado §a" + total + " §3§lVil§e§lCoins §fpor ser alcalde.");
         }
         plugin.saveConfig();
     }
