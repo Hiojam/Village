@@ -2,8 +2,6 @@ package shop_gui;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import lydark.api.Lydark_API;
-import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
@@ -13,6 +11,8 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.lydark.api.Api;
+import org.lydark.api.data.players.LydarkPlayer;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -22,7 +22,6 @@ import java.util.UUID;
 public class Exchange_Shop implements InventoryHolder {
 
     private final Inventory inv;
-    private final Lydark_API lydark = (Lydark_API) Bukkit.getServer().getPluginManager().getPlugin("Lydark_API");
 
     public Exchange_Shop(Player jugador){
         inv = Bukkit.createInventory(this, 27, "§5§lExchange Shop");
@@ -35,17 +34,16 @@ public class Exchange_Shop implements InventoryHolder {
     }
 
 
-    public void createInventory(Player jugador) {
-
-        Document data = lydark.mongo.findPlayer(jugador);
+    public void createInventory(Player p) {
         //20 VILCOINS = 1 LYCOIN/DARKCOIN
+        LydarkPlayer lyplayer = Api.getInstance().getPlayers().getPlayer(p.getName());
 
         //1000 VilCoins
         List<String> onelycoinslore = new ArrayList<>();
         onelycoinslore.add("§b§m-------------------------------");
         onelycoinslore.add("§fIntercambia §a50 §d§lLy§e§lCoins§f/§5§lDark§e§lCoins");
         onelycoinslore.add("§fpor 1000 §3§lVil§e§lCoins§f.");
-        if(data != null && data.getString("coins").equals("bothcoins")){
+        if(lyplayer.getOption("useLyCoins") && lyplayer.getOption("useDarkCoins")){
             onelycoinslore.add("");
             onelycoinslore.add("§fClick izquierdo: §d§lLy§e§lCoins");
             onelycoinslore.add("§fClick derecho: §5§lDark§e§lCoins");
@@ -59,7 +57,7 @@ public class Exchange_Shop implements InventoryHolder {
         twolycoinslore.add("§b§m-------------------------------");
         twolycoinslore.add("§fIntercambia §a250 §d§lLy§e§lCoins§f/§5§lDark§e§lCoins");
         twolycoinslore.add("§fpor 5000 §3§lVil§e§lCoins§f.");
-        if(data != null && data.getString("coins").equals("bothcoins")){
+        if(lyplayer.getOption("useLyCoins") && lyplayer.getOption("useDarkCoins")){
             twolycoinslore.add("");
             twolycoinslore.add("§fClick izquierdo: §d§lLy§e§lCoins");
             twolycoinslore.add("§fClick derecho: §5§lDark§e§lCoins");
@@ -73,7 +71,7 @@ public class Exchange_Shop implements InventoryHolder {
         threelycoinslore.add("§b§m-------------------------------");
         threelycoinslore.add("§fIntercambia §a1250 §d§lLy§e§lCoins§f/§5§lDark§e§lCoins");
         threelycoinslore.add("§fpor 25000 §3§lVil§e§lCoins§f.");
-        if(data != null && data.getString("coins").equals("bothcoins")){
+        if(lyplayer.getOption("useLyCoins") && lyplayer.getOption("useDarkCoins")){
             threelycoinslore.add("");
             threelycoinslore.add("§fClick izquierdo: §d§lLy§e§lCoins");
             threelycoinslore.add("§fClick derecho: §5§lDark§e§lCoins");

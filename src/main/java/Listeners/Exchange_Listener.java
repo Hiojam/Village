@@ -1,26 +1,19 @@
 package Listeners;
 
-import lydark.api.Lydark_API;
-import org.bson.Document;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.lydark.api.Api;
+import org.lydark.api.chat.ChatUtil;
+import org.lydark.api.data.players.IStats;
+import org.lydark.api.data.players.LydarkPlayer;
 import shop_gui.Exchange_Shop;
 import util.Shop;
-import village.Village;
 
 public class Exchange_Listener implements Listener {
-
-    private final Village plugin;
-    private final Lydark_API lydark = (Lydark_API) Bukkit.getServer().getPluginManager().getPlugin("Lydark_API");
-
-    public Exchange_Listener(Village plugin){
-        this.plugin = plugin;
-    }
 
     @EventHandler
     public void IceCream_Shop(InventoryClickEvent event){
@@ -31,126 +24,138 @@ public class Exchange_Listener implements Listener {
             if(event.getClickedInventory().getType() == InventoryType.PLAYER){ return; }
             if(event.getCurrentItem() == null) { return; }
             if(event.getCurrentItem().getType() == Material.AIR) { return; }
-            Player jugador = (Player) event.getWhoClicked();
 
-            Document data = lydark.mongo.findPlayer(jugador);
-
-            event.setCancelled(true);
+            Player p = (Player) event.getWhoClicked();
+            LydarkPlayer lyplayer = Api.getInstance().getPlayers().getPlayer(p.getName());
 
             if(event.getSlot() == 11) {
-                jugador.closeInventory();
+                p.closeInventory();
                 double price = 50;
+                double moneyamount = 1000;
 
-                if(data != null && data.getString("coins").equals("lycoins")){
-                    if(lydark.economy.compraLyCoins(jugador, price)){
-                        plugin.addVilCoins(jugador, 1000);
-                        jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a1000 §3§lVil§e§lCoins§f a tu cuenta.");
-                        Shop.payOwner("Bank", 500);
-                    }
-                }
-                else if(data != null && data.getString("coins").equals("darkcoins")){
-                    if(lydark.economy.compraDarkCoins(jugador, price)){
-                        plugin.addVilCoins(jugador, 1000);
-                        jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a1000 §3§lVil§e§lCoins§f a tu cuenta.");
-                        Shop.payOwner("Bank", 500);
-                    }
-                }
-                else{
-
+                if(!buyCoins(lyplayer, p, price, moneyamount)){
                     if(event.isLeftClick()){
-                        if(lydark.economy.compraLyCoins(jugador, price)){
-                            plugin.addVilCoins(jugador, 1000);
-                            jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a1000 §3§lVil§e§lCoins§f a tu cuenta.");
-                            Shop.payOwner("Bank", 500);
+                        if(lyplayer.getLyCoins() >= price){
+                            lyplayer.setLyCoins(lyplayer.getLyCoins()-price);
+                            IStats playerStats = Api.getInstance().getGameModes().get("village").getStatsFor(lyplayer);
+                            playerStats.setCoins(playerStats.getCoins()+moneyamount);
+                            p.sendMessage(ChatUtil.wallet()+ "§fSe te han añadido §a"+moneyamount+" §3§lVil§e§lCoins§f a tu cuenta.");
+                            Shop.payOwner("Bank", moneyamount/2);
+                            return;
                         }
                     }else{
-                        if(lydark.economy.compraDarkCoins(jugador, price)){
-                            plugin.addVilCoins(jugador, 1000);
-                            jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a1000 §3§lVil§e§lCoins§f a tu cuenta.");
-                            Shop.payOwner("Bank", 500);
+                        if(lyplayer.getDarkCoins() >= price){
+                            lyplayer.setDarkCoins(lyplayer.getDarkCoins()-price);
+                            IStats playerStats = Api.getInstance().getGameModes().get("village").getStatsFor(lyplayer);
+                            playerStats.setCoins(playerStats.getCoins()+moneyamount);
+                            p.sendMessage(ChatUtil.wallet()+ "§fSe te han añadido §a"+moneyamount+" §3§lVil§e§lCoins§f a tu cuenta.");
+                            Shop.payOwner("Bank", moneyamount/2);
+                            return;
                         }
                     }
-
+                    p.sendMessage(ChatUtil.wallet()+ "§cNo tienes dinero suficiente.");
+                }else{
+                    buyCoins(lyplayer, p, price, moneyamount);
                 }
             }
 
             else if(event.getSlot() == 13){
 
-                jugador.closeInventory();
+                p.closeInventory();
                 double price = 250;
+                double moneyamount = 5000;
 
-                if(data != null && data.getString("coins").equals("lycoins")){
-                    if(lydark.economy.compraLyCoins(jugador, price)){
-                        plugin.addVilCoins(jugador, 5000);
-                        jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a5000 §3§lVil§e§lCoins§f a tu cuenta.");
-                        Shop.payOwner("Bank", 2500);
-                    }
-                }
-                else if(data != null && data.getString("coins").equals("darkcoins")){
-                    if(lydark.economy.compraDarkCoins(jugador, price)){
-                        plugin.addVilCoins(jugador, 5000);
-                        jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a5000 §3§lVil§e§lCoins§f a tu cuenta.");
-                        Shop.payOwner("Bank", 2500);
-                    }
-                }
-                else{
-
+                if(!buyCoins(lyplayer, p, price, moneyamount)){
                     if(event.isLeftClick()){
-                        if(lydark.economy.compraLyCoins(jugador, price)){
-                            plugin.addVilCoins(jugador, 5000);
-                            jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a5000 §3§lVil§e§lCoins§f a tu cuenta.");
-                            Shop.payOwner("Bank", 2500);
+                        if(lyplayer.getLyCoins() >= price){
+                            lyplayer.setLyCoins(lyplayer.getLyCoins()-price);
+                            IStats playerStats = Api.getInstance().getGameModes().get("village").getStatsFor(lyplayer);
+                            playerStats.setCoins(playerStats.getCoins()+moneyamount);
+                            p.sendMessage(ChatUtil.wallet()+ "§fSe te han añadido §a"+moneyamount+" §3§lVil§e§lCoins§f a tu cuenta.");
+                            Shop.payOwner("Bank", moneyamount/2);
+                            return;
                         }
                     }else{
-                        if(lydark.economy.compraDarkCoins(jugador, price)){
-                            plugin.addVilCoins(jugador, 5000);
-                            jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a5000 §3§lVil§e§lCoins§f a tu cuenta.");
-                            Shop.payOwner("Bank", 2500);
+                        if(lyplayer.getDarkCoins() >= price){
+                            lyplayer.setDarkCoins(lyplayer.getDarkCoins()-price);
+                            IStats playerStats = Api.getInstance().getGameModes().get("village").getStatsFor(lyplayer);
+                            playerStats.setCoins(playerStats.getCoins()+moneyamount);
+                            p.sendMessage(ChatUtil.wallet()+ "§fSe te han añadido §a"+moneyamount+" §3§lVil§e§lCoins§f a tu cuenta.");
+                            Shop.payOwner("Bank", moneyamount/2);
+                            return;
                         }
                     }
-
+                    p.sendMessage(ChatUtil.wallet()+ "§cNo tienes dinero suficiente.");
+                }else{
+                    buyCoins(lyplayer, p, price, moneyamount);
                 }
 
             }
 
             else if(event.getSlot() == 15){
 
-                jugador.closeInventory();
+                p.closeInventory();
                 double price = 1250;
+                double moneyamount = 25000;
 
-                if(data != null && data.getString("coins").equals("lycoins")){
-                    if(lydark.economy.compraLyCoins(jugador, price)){
-                        plugin.addVilCoins(jugador, 25000);
-                        jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a25000 §3§lVil§e§lCoins§f a tu cuenta.");
-                        Shop.payOwner("Bank", 12500);
-                    }
-                }
-                else if(data != null && data.getString("coins").equals("darkcoins")){
-                    if(lydark.economy.compraDarkCoins(jugador, price)){
-                        plugin.addVilCoins(jugador, 25000);
-                        jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a25000 §3§lVil§e§lCoins§f a tu cuenta.");
-                        Shop.payOwner("Bank", 12500);
-                    }
-                }
-                else{
-
+                if(!buyCoins(lyplayer, p, price, moneyamount)){
                     if(event.isLeftClick()){
-                        if(lydark.economy.compraLyCoins(jugador, price)){
-                            plugin.addVilCoins(jugador, 25000);
-                            jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a25000 §3§lVil§e§lCoins§f a tu cuenta.");
-                            Shop.payOwner("Bank", 12500);
+                        if(lyplayer.getLyCoins() >= price){
+                            lyplayer.setLyCoins(lyplayer.getLyCoins()-price);
+                            IStats playerStats = Api.getInstance().getGameModes().get("village").getStatsFor(lyplayer);
+                            playerStats.setCoins(playerStats.getCoins()+moneyamount);
+                            p.sendMessage(ChatUtil.wallet()+ "§fSe te han añadido §a"+moneyamount+" §3§lVil§e§lCoins§f a tu cuenta.");
+                            Shop.payOwner("Bank", moneyamount/2);
+                            return;
                         }
                     }else{
-                        if(lydark.economy.compraDarkCoins(jugador, price)){
-                            plugin.addVilCoins(jugador, 25000);
-                            jugador.sendMessage(lydark.chat.wallet + " §fSe te han añadido §a25000 §3§lVil§e§lCoins§f a tu cuenta.");
-                            Shop.payOwner("Bank", 12500);
+                        if(lyplayer.getDarkCoins() >= price){
+                            lyplayer.setDarkCoins(lyplayer.getDarkCoins()-price);
+                            IStats playerStats = Api.getInstance().getGameModes().get("village").getStatsFor(lyplayer);
+                            playerStats.setCoins(playerStats.getCoins()+moneyamount);
+                            p.sendMessage(ChatUtil.wallet()+ "§fSe te han añadido §a"+moneyamount+" §3§lVil§e§lCoins§f a tu cuenta.");
+                            Shop.payOwner("Bank", moneyamount/2);
+                            return;
                         }
                     }
-
+                    p.sendMessage(ChatUtil.wallet()+ "§cNo tienes dinero suficiente.");
+                }else{
+                    buyCoins(lyplayer, p, price, moneyamount);
                 }
 
             }
+        }
+    }
+
+
+    private boolean buyCoins(LydarkPlayer lyplayer, Player p, double price, double moneyamount){
+
+        if(lyplayer.getOption("useLyCoins") && !lyplayer.getOption("useDarkCoins")){
+            if(lyplayer.getLyCoins() >= price){
+                lyplayer.setLyCoins(lyplayer.getLyCoins()-price);
+                IStats playerStats = Api.getInstance().getGameModes().get("village").getStatsFor(lyplayer);
+                playerStats.setCoins(playerStats.getCoins()+moneyamount);
+                p.sendMessage(ChatUtil.wallet()+ "§fSe te han añadido §a"+moneyamount+" §3§lVil§e§lCoins§f a tu cuenta.");
+                Shop.payOwner("Bank", moneyamount/2);
+                return true;
+            }
+            p.sendMessage(ChatUtil.wallet()+ "§cNo tienes dinero suficiente.");
+            return true;
+        }
+        else if(lyplayer.getOption("useDarkCoins") && !lyplayer.getOption("useLyCoins")){
+            if(lyplayer.getDarkCoins() >= price){
+                lyplayer.setDarkCoins(lyplayer.getDarkCoins()-price);
+                IStats playerStats = Api.getInstance().getGameModes().get("village").getStatsFor(lyplayer);
+                playerStats.setCoins(playerStats.getCoins()+moneyamount);
+                p.sendMessage(ChatUtil.wallet()+ "§fSe te han añadido §a"+moneyamount+" §3§lVil§e§lCoins§f a tu cuenta.");
+                Shop.payOwner("Bank", moneyamount/2);
+                return true;
+            }
+            p.sendMessage(ChatUtil.wallet()+ "§cNo tienes dinero suficiente.");
+            return true;
+        }
+        else{
+            return false;
         }
     }
 }

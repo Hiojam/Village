@@ -72,8 +72,8 @@
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
         <repository>
-            <id>RoxxionYT-Lydark_API</id>
-            <url>https://packagecloud.io/priv/8b62f0915c2efed9c5048a66eff2d186ab4d964460fb99cb/RoxxionYT/Lydark_API/maven2</url>
+            <id>RoxxionYT-Api</id>
+            <url>https://packagecloud.io/priv/8b62f0915c2efed9c5048a66eff2d186ab4d964460fb99cb/RoxxionYT/Api/maven2</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -91,9 +91,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>lydark.api</groupId>
-            <artifactId>API</artifactId>
-            <version>1.0.8</version>
+            <groupId>org.lydark</groupId>
+            <artifactId>Api</artifactId>
+            <version>0.0.3</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

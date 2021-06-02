@@ -9,22 +9,19 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.lydark.api.Api;
+import org.lydark.api.chat.ChatUtil;
+import org.lydark.api.data.players.IStats;
+import org.lydark.api.data.players.LydarkPlayer;
 import shop_gui.IceCream_Shop;
 import util.Item;
 import util.Shop;
-import village.Village;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class IceCream_Listener implements Listener {
-
-    private final Village plugin;
-
-    public IceCream_Listener(Village plugin){
-        this.plugin = plugin;
-    }
 
     @EventHandler
     public void IceCream_Shop(InventoryClickEvent event){
@@ -35,40 +32,57 @@ public class IceCream_Listener implements Listener {
             if(event.getClickedInventory().getType() == InventoryType.PLAYER){ return; }
             if(event.getCurrentItem() == null) { return; }
             if(event.getCurrentItem().getType() == Material.AIR) { return; }
-            Player jugador = (Player) event.getWhoClicked();
+
+            Player p = (Player) event.getWhoClicked();
+            LydarkPlayer lyplayer = Api.getInstance().getPlayers().getPlayer(p.getName());
 
             event.setCancelled(true);
 
             if(event.getSlot() == 11) {
-                jugador.closeInventory();
+                p.closeInventory();
                 double price = 10;
+                IStats playerStats = Api.getInstance().getGameModes().get("village").getStatsFor(lyplayer);
 
-                if(plugin.compraVilCoins(jugador, price)){
-                    jugador.getInventory().addItem(Item.itemGenerator("IceCream", "Chocolate", null));
+                if(playerStats.getCoins() >= price){
+                    playerStats.setCoins(playerStats.getCoins()-price);
+                    p.getInventory().addItem(Item.itemGenerator("IceCream", "Chocolate"));
+                    p.sendMessage(ChatUtil.wallet()+" §fSe te han removido §a" + price + " §3§lVil§e§lCoins§f de tu cuenta.");
                     Shop.payOwner("IceCream_Shop", price);
+                    return;
                 }
+                p.sendMessage(ChatUtil.wallet()+ " §cNo tienes dinero suficiente.");
             }
 
             else if(event.getSlot() == 13){
 
-                jugador.closeInventory();
+                p.closeInventory();
                 double price = 10;
+                IStats playerStats = Api.getInstance().getGameModes().get("village").getStatsFor(lyplayer);
 
-                if(plugin.compraVilCoins(jugador, price)){
-                    jugador.getInventory().addItem(Item.itemGenerator("IceCream", "Vainilla", null));
+                if(playerStats.getCoins() >= price){
+                    playerStats.setCoins(playerStats.getCoins()-price);
+                    p.getInventory().addItem(Item.itemGenerator("IceCream", "Vainilla"));
+                    p.sendMessage(ChatUtil.wallet()+" §fSe te han removido §a" + price + " §3§lVil§e§lCoins§f de tu cuenta.");
                     Shop.payOwner("IceCream_Shop", price);
+                    return;
                 }
+                p.sendMessage(ChatUtil.wallet()+ " §cNo tienes dinero suficiente.");
             }
 
             else if(event.getSlot() == 15) {
 
-                jugador.closeInventory();
+                p.closeInventory();
                 double price = 10;
+                IStats playerStats = Api.getInstance().getGameModes().get("village").getStatsFor(lyplayer);
 
-                if (plugin.compraVilCoins(jugador, price)) {
-                    jugador.getInventory().addItem(Item.itemGenerator("IceCream", "Strawberry", null));
+                if(playerStats.getCoins() >= price){
+                    playerStats.setCoins(playerStats.getCoins()-price);
+                    p.getInventory().addItem(Item.itemGenerator("IceCream", "Strawberry"));
+                    p.sendMessage(ChatUtil.wallet()+" §fSe te han removido §a" + price + " §3§lVil§e§lCoins§f de tu cuenta.");
                     Shop.payOwner("IceCream_Shop", price);
+                    return;
                 }
+                p.sendMessage(ChatUtil.wallet()+ " §cNo tienes dinero suficiente.");
             }
         }
     }
@@ -79,9 +93,9 @@ public class IceCream_Listener implements Listener {
         Player jugador = event.getPlayer();
 
         List<ItemStack> items = new ArrayList<>();
-        items.add(Item.itemGenerator("IceCream", "Chocolate", null));
-        items.add(Item.itemGenerator("IceCream", "Vainilla", null));
-        items.add(Item.itemGenerator("IceCream", "Strawberry", null));
+        items.add(Item.itemGenerator("IceCream", "Chocolate"));
+        items.add(Item.itemGenerator("IceCream", "Vainilla"));
+        items.add(Item.itemGenerator("IceCream", "Strawberry"));
 
         if(event.getAction().equals(Action.RIGHT_CLICK_AIR) && jugador.getItemInHand() != null && items.contains(jugador.getItemInHand())){
 

@@ -10,23 +10,19 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.lydark.api.Api;
+import org.lydark.api.chat.ChatUtil;
+import org.lydark.api.data.players.IStats;
+import org.lydark.api.data.players.LydarkPlayer;
 import shop_gui.Restaurant_Shop;
 import util.Item;
 import util.Shop;
-import village.Village;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class Restaurant_Listener implements Listener {
-
-    private final Village plugin;
-
-    public Restaurant_Listener(Village plugin){
-        this.plugin = plugin;
-    }
-
 
     @EventHandler
     public void Restaurant_Shop(InventoryClickEvent event){
@@ -37,72 +33,99 @@ public class Restaurant_Listener implements Listener {
             if(event.getClickedInventory().getType() == InventoryType.PLAYER){ return; }
             if(event.getCurrentItem() == null) { return; }
             if(event.getCurrentItem().getType() == Material.AIR) { return; }
-            Player jugador = (Player) event.getWhoClicked();
+
+            Player p = (Player) event.getWhoClicked();
+            LydarkPlayer lyplayer = Api.getInstance().getPlayers().getPlayer(p.getName());
+            IStats playerStats = Api.getInstance().getGameModes().get("village").getStatsFor(lyplayer);
 
             if(event.getSlot() == 11) {
-                jugador.closeInventory();
+                p.closeInventory();
                 double price = 20;
 
-                if(plugin.compraVilCoins(jugador, price)){
-                    jugador.getInventory().addItem(Item.itemGenerator("Restaurant", "Hamburguer", null));
+                if(playerStats.getCoins() >= price){
+                    playerStats.setCoins(playerStats.getCoins()-price);
+                    p.getInventory().addItem(Item.itemGenerator("Restaurant", "Hamburguer"));
+                    p.sendMessage(ChatUtil.wallet()+" §fSe te han removido §a" + price + " §3§lVil§e§lCoins§f de tu cuenta.");
                     Shop.payOwner("Restaurant_Shop", price);
+                    return;
                 }
+                p.sendMessage(ChatUtil.wallet()+ " §cNo tienes dinero suficiente.");
             }
 
             else if(event.getSlot() == 13){
 
-                jugador.closeInventory();
+                p.closeInventory();
                 double price = 15;
 
-                if(plugin.compraVilCoins(jugador, price)){
-                    jugador.getInventory().addItem(Item.itemGenerator("Restaurant", "Fries", null));
+                if(playerStats.getCoins() >= price){
+                    playerStats.setCoins(playerStats.getCoins()-price);
+                    p.getInventory().addItem(Item.itemGenerator("Restaurant", "Fries"));
+                    p.sendMessage(ChatUtil.wallet()+" §fSe te han removido §a" + price + " §3§lVil§e§lCoins§f de tu cuenta.");
                     Shop.payOwner("Restaurant_Shop", price);
+                    return;
                 }
+                p.sendMessage(ChatUtil.wallet()+ " §cNo tienes dinero suficiente.");
             }
 
             else if(event.getSlot() == 15){
 
-                jugador.closeInventory();
+                p.closeInventory();
                 double price = 30;
 
-                if(plugin.compraVilCoins(jugador, price)){
-                    jugador.getInventory().addItem(Item.itemGenerator("Restaurant", "Pizza", null));
+                if(playerStats.getCoins() >= price){
+                    playerStats.setCoins(playerStats.getCoins()-price);
+                    p.getInventory().addItem(Item.itemGenerator("Restaurant", "Pizza"));
+                    p.sendMessage(ChatUtil.wallet()+" §fSe te han removido §a" + price + " §3§lVil§e§lCoins§f de tu cuenta.");
                     Shop.payOwner("Restaurant_Shop", price);
+                    return;
                 }
+                p.sendMessage(ChatUtil.wallet()+ " §cNo tienes dinero suficiente.");
             }
 
             else if(event.getSlot() == 29){
 
-                jugador.closeInventory();
+                p.closeInventory();
                 double price = 15;
 
-                if(plugin.compraVilCoins(jugador, price)){
-                    jugador.getInventory().addItem(Item.itemGenerator("Restaurant", "Donut", null));
+                if(playerStats.getCoins() >= price){
+                    playerStats.setCoins(playerStats.getCoins()-price);
+                    p.getInventory().addItem(Item.itemGenerator("Restaurant", "Donut"));
+                    p.sendMessage(ChatUtil.wallet()+" §fSe te han removido §a" + price + " §3§lVil§e§lCoins§f de tu cuenta.");
                     Shop.payOwner("Restaurant_Shop", price);
+                    return;
                 }
+                p.sendMessage(ChatUtil.wallet()+ " §cNo tienes dinero suficiente.");
             }
 
             else if(event.getSlot() == 31){
 
-                jugador.closeInventory();
+                p.closeInventory();
                 double price = 15;
 
-                if(plugin.compraVilCoins(jugador, price)){
-                    jugador.getInventory().addItem(Item.itemGenerator("Restaurant", "Muffin", null));
+                if(playerStats.getCoins() >= price){
+                    playerStats.setCoins(playerStats.getCoins()-price);
+                    p.getInventory().addItem(Item.itemGenerator("Restaurant", "Muffin"));
+                    p.sendMessage(ChatUtil.wallet()+" §fSe te han removido §a" + price + " §3§lVil§e§lCoins§f de tu cuenta.");
                     Shop.payOwner("Restaurant_Shop", price);
+                    return;
                 }
+                p.sendMessage(ChatUtil.wallet()+ " §cNo tienes dinero suficiente.");
 
             }
 
             else if(event.getSlot() == 33) {
 
-                jugador.closeInventory();
+                p.closeInventory();
                 double price = 12;
 
-                if (plugin.compraVilCoins(jugador, price)) {
-                    jugador.getInventory().addItem(Item.itemGenerator("Restaurant", "Drink", null));
+                if(playerStats.getCoins() >= price){
+                    playerStats.setCoins(playerStats.getCoins()-price);
+                    p.getInventory().addItem(Item.itemGenerator("Restaurant", "Drink"));
+                    p.sendMessage(ChatUtil.wallet()+" §fSe te han removido §a" + price + " §3§lVil§e§lCoins§f de tu cuenta.");
                     Shop.payOwner("Restaurant_Shop", price);
+                    return;
                 }
+                p.sendMessage(ChatUtil.wallet()+ " §cNo tienes dinero suficiente.");
             }
         }
     }
@@ -113,12 +136,12 @@ public class Restaurant_Listener implements Listener {
         Player jugador = event.getPlayer();
 
         List<ItemStack> items = new ArrayList<>();
-        items.add(Item.itemGenerator("Restaurant", "Hamburguer", null));
-        items.add(Item.itemGenerator("Restaurant", "Fries", null));
-        items.add(Item.itemGenerator("Restaurant", "Pizza", null));
-        items.add(Item.itemGenerator("Restaurant", "Donut", null));
-        items.add(Item.itemGenerator("Restaurant", "Muffin", null));
-        items.add(Item.itemGenerator("Restaurant", "Drink", null));
+        items.add(Item.itemGenerator("Restaurant", "Hamburguer"));
+        items.add(Item.itemGenerator("Restaurant", "Fries"));
+        items.add(Item.itemGenerator("Restaurant", "Pizza"));
+        items.add(Item.itemGenerator("Restaurant", "Donut"));
+        items.add(Item.itemGenerator("Restaurant", "Muffin"));
+        items.add(Item.itemGenerator("Restaurant", "Drink"));
 
         if(event.getAction().equals(Action.RIGHT_CLICK_AIR) && jugador.getItemInHand() != null && items.contains(jugador.getItemInHand())){
 

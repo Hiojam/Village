@@ -48,4 +48,30 @@ public class Item {
 
         return itemgenerator;
     }
+
+    public static ItemStack itemGenerator(String type, String item){
+
+        FileConfiguration config = plugin.getConfig();
+        String name = ChatColor.translateAlternateColorCodes('&', config.getString("Items."+type+"."+item+".name"));
+        String head = config.getString("Items."+type+"."+item+".head");
+
+        ItemStack itemgenerator = new ItemStack(Material.SKULL_ITEM,1,(byte) SkullType.PLAYER.ordinal());
+        SkullMeta itemgeneratormeta = (SkullMeta) itemgenerator.getItemMeta();
+
+        GameProfile profile = new GameProfile(UUID.randomUUID(), null);
+        profile.getProperties().put("textures", new Property("textures", head));
+        Field field;
+        try {
+            field = itemgeneratormeta.getClass().getDeclaredField("profile");
+            field.setAccessible(true);
+            field.set(itemgeneratormeta, profile);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
+            x.printStackTrace();
+        }
+        itemgeneratormeta.setDisplayName(name);
+
+        itemgenerator.setItemMeta(itemgeneratormeta);
+
+        return itemgenerator;
+    }
 }
